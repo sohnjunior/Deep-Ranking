@@ -37,10 +37,12 @@ class DeepRank(nn.Module):
 
         self.conv_model = ConvNet()  # ResNet101
 
-        self.conv1 = torch.nn.Conv2d(in_channels=3, out_channels=96, kernel_size=8, padding=1, stride=16)  # 1st sub sampling
+        # 1st sub sampling
+        self.conv1 = torch.nn.Conv2d(in_channels=3, out_channels=96, kernel_size=8, padding=1, stride=16)
         self.maxpool1 = torch.nn.MaxPool2d(kernel_size=3, stride=4, padding=1)
 
-        self.conv2 = torch.nn.Conv2d(in_channels=3, out_channels=96, kernel_size=8, padding=4, stride=32)  # 2nd sub sampling
+        # 2nd sub sampling
+        self.conv2 = torch.nn.Conv2d(in_channels=3, out_channels=96, kernel_size=8, padding=4, stride=32)
         self.maxpool2 = torch.nn.MaxPool2d(kernel_size=7, stride=2, padding=3)
 
         self.dense_layer = torch.nn.Linear(in_features=(4096 + 3072), out_features=4096)

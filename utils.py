@@ -17,7 +17,7 @@ class DatasetImageNet(Dataset):
 
     def __getitem__(self, index):
         row = self.data.iloc[index, :]
-        images = [Image.open(row[i]).convert('RGB') for i in range(0, 3)]  # open triplet images as RGB(query, neg, pos)
+        images = [Image.open(row[i]).convert('RGB') for i in range(3)]  # open triplet images as RGB(query, neg, pos)
 
         if self.transform is not None:
             for i in range(0, 3):
@@ -46,4 +46,4 @@ data_transforms = {
 
 def euclidean_distance(x, y):
     """ calculate euclidean distance """
-    return np.sqrt(np.sum(x - y) ** 2)
+    return np.sqrt(np.sum(x - y, axis=1) ** 2)

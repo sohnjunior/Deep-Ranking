@@ -49,7 +49,6 @@ def train_model(num_epochs, optim_name=""):
 
         running_loss = []
         for batch_idx, (Q, P, N) in enumerate(train_loader):
-
             if torch.cuda.is_available():
                 Q, P, N = Variable(Q).cuda(), Variable(P).cuda(), Variable(N).cuda()
             else:
@@ -58,9 +57,7 @@ def train_model(num_epochs, optim_name=""):
             # set gradient to 0
             optimizer.zero_grad()
 
-            Q_embedding = model(Q)
-            P_embedding = model(P)
-            N_embedding = model(N)
+            Q_embedding, P_embedding, N_embedding = model(Q), model(P), model(N)
 
             # get triplet loss
             loss = F.triplet_margin_loss(anchor=Q_embedding, positive=P_embedding, negative=N_embedding)

@@ -1,6 +1,6 @@
 import os
 
-""" change structure of validation folder """
+""" change structure of validation folder(used for tiny-imagenet-200 only) """
 
 validation_path = "tiny-imagenet-200/val/"
 annotation_file_path = os.path.join(validation_path, "val_annotations.txt")
