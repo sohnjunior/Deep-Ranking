@@ -4,7 +4,7 @@ Image Similarity with Deep Ranking Algorithm
 
 Getting Started 
 --------------- 
-<hr>
+
 <pre>
 <code># pip install -r requirements.txt // 아직 안해도 됨
 python triplet_sampler.py <i>--n_pos</i> <font color="red">1</font> <i>--n_neg</i> <font color="red">1</font>   
