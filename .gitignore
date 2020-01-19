@@ -1,10 +1,11 @@
 .DS_Store/
+.DS_Store
 .idea/
 tiny-imagenet-200/
 __pycache__/
 triplet.csv 
 embedding.txt                                                                                                                              
-deepranknet.model
+deeprank.pt
 Icon?
 
 

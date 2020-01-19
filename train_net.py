@@ -8,8 +8,8 @@ import torch.optim as optim
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
 from utils import data_transforms, DatasetImageNet
-
 from net import DeepRank
+
 
 # -- parameters
 BATCH_SIZE = 4
@@ -17,7 +17,7 @@ LEARNING_RATE = 0.001
 
 # -- path info
 TRIPLET_PATH = "triplet.csv"
-MODEL_PATH = 'deepranknet.model'  # model will save at this path
+MODEL_PATH = 'deeprank.pt'  # model will save at this path
 
 # -- dataset loader & device setting
 train_dataset = DatasetImageNet(TRIPLET_PATH, transform=data_transforms['train'])
@@ -71,15 +71,13 @@ def train_model(num_epochs, optim_name=""):
 
             print(f'\t--> epoch{epoch+1} {100 * batch_idx / len(train_loader):.2f}% done... loss : {loss:.4f}')
 
-            # TODO loss 작을 경우에만 dict에 저장하기
-
         epoch_loss = np.mean(running_loss)
         print(f'epoch{epoch+1} average loss: {epoch_loss:.2f}')
 
     finish_time = time.time()
     print(f'elapsed time : {time.strftime("%H:%M:%S", time.gmtime(finish_time - start_time))}')
 
-    torch.save(model, MODEL_PATH)  # save model TODO 돌아가는거 확인한 후 save dict로 변경하기
+    torch.save(model.state_dict(), MODEL_PATH)  # save model parameters
 
 
 def main():

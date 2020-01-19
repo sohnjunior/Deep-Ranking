@@ -9,12 +9,13 @@ from torch.autograd import Variable
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
+from net import DeepRank
 from utils import euclidean_distance, data_transforms, DatasetImageNet
 
 
 # -- path info
 TRIPLET_PATH = 'triplet.csv'
-MODEL_PATH = 'deepranknet.model'
+MODEL_PATH = 'deeprank.pt'
 EMBEDDING_PATH = 'embedding.txt'
 
 # -- parameters
@@ -23,7 +24,8 @@ BATCH_SIZE = 4
 
 class Prediction:
     def __init__(self):
-        self.model = torch.load(MODEL_PATH)
+        self.model = DeepRank()
+        self.model.load_state_dict(torch.load(MODEL_PATH))  # load model parameters
         self.train_df = pd.read_csv(TRIPLET_PATH)
 
         # check embedding
@@ -111,9 +113,9 @@ class Prediction:
 
 def main():
     predictor = Prediction()
-    image_path1 = 'tiny-imagenet-200/val/n02058221/images/val_462.JPEG'
-    image_path2 = 'tiny-imagenet-200/val/n01698640/images/val_892.JPEG'
-    image_path3 = 'tiny-imagenet-200/val/n01742172/images/val_704.JPEG'
+    image_path1 = 'tiny-imagenet-200/val/n02058221/images/val_947.JPEG'
+    image_path2 = 'tiny-imagenet-200/val/n01698640/images/val_77.JPEG'
+    image_path3 = 'tiny-imagenet-200/val/n01742172/images/val_569.JPEG'
 
     # get images for 3 Validation set
     test_images = [image_path1, image_path2, image_path3]
