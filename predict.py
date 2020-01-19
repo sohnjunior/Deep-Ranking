@@ -30,13 +30,13 @@ class Prediction:
 
         # check embedding
         if not os.path.exists(EMBEDDING_PATH):
-            print('Predefined embedding file not found')
+            print('pre-generated [embedding.txt] not exist!')
             self.embedding()
         self.train_embedded = np.fromfile(EMBEDDING_PATH, dtype=np.float32).reshape(-1, 4096)
 
     def embedding(self):
         """ create embedding textfile with train data """
-        print('\t==> Generate embedding...', end='')
+        print('  ==> Generate embedding...', end='')
         self.model.eval()  # set to eval mode
 
         train_dataset = DatasetImageNet(TRIPLET_PATH, transform=data_transforms['val'])
@@ -96,6 +96,11 @@ class Prediction:
 
     def predict(self, query_image_path, result_num, save_as='result.png'):
         """ predict top-n similar images """
+        # check query path is valid
+        if not os.path.exists(query_image_path):
+            print(f'[ERROR] invalid query image path: {query_image_path}')
+            return
+
         # embedding query image
         query_embedded = self.query_embedding(query_image_path)
 

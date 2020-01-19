@@ -4,12 +4,12 @@ import os
 import numpy as np
 import pandas as pd
 
-# -- class(label) info --> TODO 다른 데이터셋 적용 시 수정필요
+# -- class(label) info
 class_file = open("tiny-imagenet-200/wnids.txt", "r")
 classes = [x.strip() for x in class_file.readlines()]
 class_file.close()
 
-# -- path info --> TODO 다른 데이터셋 적용 시 수정필요
+# -- path info
 TRAIN_PATH = "tiny-imagenet-200/train/"
 TRIPLET_PATH = "triplet.csv"
 
