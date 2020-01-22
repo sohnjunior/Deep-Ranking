@@ -118,9 +118,9 @@ class Prediction:
 
 def main():
     predictor = Prediction()
-    image_path1 = '상표이미지데이터/val/닭/images/4020020037823.jpg'
-    image_path2 = '상표이미지데이터/val/의자/images/3020060013130M010.jpg'
-    image_path3 = '상표이미지데이터/val/전기스탠드/images/3020070022538M010.jpg'
+    image_path1 = 'your validation path'
+    image_path2 = 'your validation path'
+    image_path3 = 'your validation path'
 
     # get images for 3 Validation set
     test_images = [image_path1, image_path2, image_path3]
