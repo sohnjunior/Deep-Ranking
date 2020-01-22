@@ -118,33 +118,15 @@ class Prediction:
 
 def main():
     predictor = Prediction()
-    image_path1 = 'tiny-imagenet-200/val/n02058221/images/val_947.JPEG'
-    image_path2 = 'tiny-imagenet-200/val/n01698640/images/val_77.JPEG'
-    image_path3 = 'tiny-imagenet-200/val/n01742172/images/val_569.JPEG'
+    image_path1 = '상표이미지데이터/val/닭/images/4020020037823.jpg'
+    image_path2 = '상표이미지데이터/val/의자/images/3020060013130M010.jpg'
+    image_path3 = '상표이미지데이터/val/전기스탠드/images/3020070022538M010.jpg'
 
     # get images for 3 Validation set
     test_images = [image_path1, image_path2, image_path3]
     for idx, p in enumerate(test_images):
         predictor.predict(p, 5, f'result_{idx}.png')
 
-
-'''
-from sklearn.neighbors import KNeighborsClassifier
-
-def knn_accuracy():
-    # parse class label
-    y_train = train_df["query"].apply(lambda x: x.split("/")[2])[0:X_train.shape[0]]
-    y_test = test_df["query"].apply(lambda x: x.split("/")[2])[0:X_test.shape[0]]
-
-    knn_model = KNeighborsClassifier(n_neighbors=30, n_jobs=-1, p=2)
-    knn_model.fit(X=X_train, y=y_train)
-    _, idx = knn_model.kneighbors(X_test, n_neighbors=K)  # idx -> top 30 nearest neighbors
-    n_idx = []
-    for i in range(len(idx)):
-        n_idx.append([y_train[x] for x in idx[i]])
-
-    sum([1 if (y_test[i] in n_idx[i]) else 0 for i in range(0, len(idx))]) / float(len(idx))
-'''
 
 if __name__ == '__main__':
     main()

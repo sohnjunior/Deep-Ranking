@@ -22,7 +22,6 @@ MODEL_PATH = 'deeprank.pt'  # model will save at this path
 # -- dataset loader & device setting
 train_dataset = DatasetImageNet(TRIPLET_PATH, transform=data_transforms['train'])
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, drop_last=True, num_workers=4)
-# device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 
 def train_model(num_epochs, optim_name=""):
