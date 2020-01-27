@@ -8,9 +8,13 @@ import numpy as np
 class DatasetImageNet(Dataset):
     """ custumized dataset loader """
 
-    def __init__(self, file_path, transform=None):
+    def __init__(self, file_path, embedding=False, transform=None):
         self.data = pd.read_csv(file_path)
         self.transform = transform
+
+        # if it is embedding mode
+        if embedding:
+            self.data = self.data.drop_duplicates('query', keep='first')
 
     def __len__(self):
         return len(self.data)

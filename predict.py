@@ -26,7 +26,7 @@ class Prediction:
     def __init__(self):
         self.model = DeepRank()
         self.model.load_state_dict(torch.load(MODEL_PATH))  # load model parameters
-        self.train_df = pd.read_csv(TRIPLET_PATH)
+        self.train_df = pd.read_csv(TRIPLET_PATH).drop_duplicates('query', keep='first').reset_index(drop=True)
 
         # check embedding
         if not os.path.exists(EMBEDDING_PATH):
@@ -39,9 +39,9 @@ class Prediction:
         print('  ==> Generate embedding...', end='')
         self.model.eval()  # set to eval mode
 
-        train_dataset = DatasetImageNet(TRIPLET_PATH, transform=data_transforms['val'])
-        train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=False,
-                                                  drop_last=True, num_workers=4)
+        train_dataset = DatasetImageNet(TRIPLET_PATH, embedding=True, transform=data_transforms['val'])
+        train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=BATCH_SIZE,
+                                                   shuffle=False, drop_last=True, num_workers=4)
 
         embedded_images = []
         for batch_idx, (Q, _, _) in enumerate(train_loader):

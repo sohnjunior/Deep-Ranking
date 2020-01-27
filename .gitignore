@@ -2,6 +2,7 @@
 .DS_Store
 .idea/
 tiny-imagenet-200/
+patent_image/
 __pycache__/
 triplet.csv 
 embedding.txt                                                                                                                              

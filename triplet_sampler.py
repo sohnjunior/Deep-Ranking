@@ -5,12 +5,12 @@ import numpy as np
 import pandas as pd
 
 # -- class(label) info
-class_file = open("tiny-imagenet-200/wnids.txt", "r")
+class_file = open("patent_image/wnids.txt", "r")
 classes = [x.strip() for x in class_file.readlines()]
 class_file.close()
 
 # -- path info
-TRAIN_PATH = "tiny-imagenet-200/train/"
+TRAIN_PATH = "patent_image/train/"
 TRIPLET_PATH = "triplet.csv"
 
 
@@ -73,10 +73,10 @@ def generate_triplets(dataset_path, num_neg_images, num_pos_images):
 
     all_images = []
     for class_ in classes:
-        all_images += list_pictures(os.path.join(dataset_path, class_ + "/images/"))
+        all_images += list_pictures(os.path.join(dataset_path, class_))
 
     for class_ in classes:
-        image_names = list_pictures(os.path.join(dataset_path, class_ + "/images/"))
+        image_names = list_pictures(os.path.join(dataset_path, class_))
         for image_name in image_names:
             query_image = image_name
             positive_images = get_positive_images(image_name, image_names, num_pos_images)
