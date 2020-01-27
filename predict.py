@@ -18,9 +18,6 @@ TRIPLET_PATH = 'triplet.csv'
 MODEL_PATH = 'deeprank.pt'
 EMBEDDING_PATH = 'embedding.txt'
 
-# -- parameters
-BATCH_SIZE = 4
-
 
 class Prediction:
     def __init__(self):
@@ -38,19 +35,20 @@ class Prediction:
         """ create embedding textfile with train data """
         print('  ==> Generate embedding...', end='')
         self.model.eval()  # set to eval mode
+        if torch.cuda.is_available():
+            self.model.to('cuda')
 
         train_dataset = DatasetImageNet(TRIPLET_PATH, embedding=True, transform=data_transforms['val'])
-        train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=BATCH_SIZE,
-                                                   shuffle=False, drop_last=True, num_workers=4)
 
         embedded_images = []
-        for batch_idx, (Q, _, _) in enumerate(train_loader):
-            if torch.cuda.is_available():
-                Q = Variable(Q).cuda()
-            else:
-                Q = Variable(Q)
+        for idx in range(len(train_dataset)):
+            input_tensor = train_dataset[idx][0]
+            input_batch = input_tensor.unsqueeze(0)
 
-            embedding = self.model(Q)
+            if torch.cuda.is_available():
+                input_batch = input_batch.to('cuda')
+
+            embedding = self.model(input_batch)
             embedding_np = embedding.cpu().detach().numpy()
 
             embedded_images.append(embedding_np)  # collect train data's predicted results
@@ -90,7 +88,7 @@ class Prediction:
                 ax[-1].set_title("img_:" + str(i - 1), fontsize=50)
                 ax[-1].set(xlabel='l2-dist=' + str(dist))
                 ax[-1].xaxis.label.set_fontsize(25)
-            plt.imshow(img)
+            plt.imshow(img, cmap='Greys_r')
         plt.savefig(result_name)  # save as file
         print('done!')
 

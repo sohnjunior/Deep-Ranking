@@ -12,8 +12,9 @@ from net import DeepRank
 
 
 # -- parameters
-BATCH_SIZE = 4
+BATCH_SIZE = 20
 LEARNING_RATE = 0.001
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 # -- path info
 TRIPLET_PATH = "triplet.csv"
@@ -28,7 +29,7 @@ def train_model(num_epochs, optim_name=""):
     model = DeepRank()
 
     if torch.cuda.is_available():
-        model.cuda()
+        model.to(device)
 
     if optim_name == "adam":
         optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
@@ -49,9 +50,7 @@ def train_model(num_epochs, optim_name=""):
         running_loss = []
         for batch_idx, (Q, P, N) in enumerate(train_loader):
             if torch.cuda.is_available():
-                Q, P, N = Variable(Q).cuda(), Variable(P).cuda(), Variable(N).cuda()
-            else:
-                Q, P, N = Variable(Q), Variable(P), Variable(N)
+                Q, P, N = Q.to(device), P.to(device), N.to(device)
 
             # set gradient to 0
             optimizer.zero_grad()
