@@ -116,9 +116,9 @@ class Prediction:
 
 def main():
     predictor = Prediction()
-    image_path1 = 'your validation path'
-    image_path2 = 'your validation path'
-    image_path3 = 'your validation path'
+    image_path1 = 'patent_image/train/닭/4020020037823.jpg'
+    image_path2 = 'patent_image/train/의자/3020100003952M011.1.jpg'
+    image_path3 = 'patent_image/train/태양/4019880001850.jpg'
 
     # get images for 3 Validation set
     test_images = [image_path1, image_path2, image_path3]
