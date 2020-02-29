@@ -5,11 +5,23 @@ Image Similarity with Deep Ranking Algorithm
 Getting Started 
 --------------- 
 
+### Deep Ranking
 <pre>
-<code># pip install -r requirements.txt // 아직 안해도 됨
-python triplet_sampler.py <i>--n_pos</i> <font color="red">1</font> <i>--n_neg</i> <font color="red">1</font>   
-python train_net.py <i>--epochs</i> <font color="red">1</font> <i>--optim</i> <font color="red">adam</font> 
-python predict.py  
+<code>
+python triplet_sampler.py <i>--n_pos</i> 1 <i>--n_neg</i> 1   
+python train_net.py <i>--epochs</i> 1 <i>--optim</i> adam 
+python predict.py
+</code>
 </pre>
-</code>   
+
+### Required package for Triplet Checker
+<pre>
+<code>
+pip install tkinter
+pip install pillow
+pip install pandas
+pip install ttkthemes
+</code>
+</pre>
+
 
