@@ -82,10 +82,10 @@ class TripletChecker():
         target.configure(image=img)
         target.image = img
 
-    def next_query(self, init=False):
+    def next_query(self, inc_idx=True):
         """ load next query image """
         # increase index
-        if not init:
+        if inc_idx:
             self.triplet_index += 1
         query_path = self.triplet_pd['query'][self.triplet_index]
         positive_path = self.triplet_pd['positive'][self.triplet_index]
@@ -97,17 +97,21 @@ class TripletChecker():
 
     def delete_query(self):
         """ delete current query image and load next image """
-        # TODO delete current dataframe info
-        # self.triplet_pd.drop()
-
+        # delete current dataframe info
+        self.triplet_pd.drop(self.triplet_index, inplace=True)
+        self.triplet_pd.reset_index(drop=True, inplace=True)
+        print(self.triplet_pd)
         # next query
-        self.next_query()
+        self.next_query(inc_idx=False)
 
     def save_and_quit(self):
         """ save data and quit window """
         # save check-point
         with open('triplet_check_point.pickle', 'wb') as f:
             pickle.dump(self.triplet_index, f)
+
+        # save to csv
+        self.triplet_pd.to_csv('triplet.csv', index=False, mode='w')
 
         # destroy the window
         self.window.destroy()
@@ -120,7 +124,7 @@ class TripletChecker():
         self.set_image_frame()
 
         # show image
-        self.next_query(init=True)
+        self.next_query(inc_idx=False)
 
         # execute program
         self.window.mainloop()
