@@ -114,7 +114,7 @@ class TripletChecker():
         # delete current dataframe info
         self.triplet_pd.drop(self.triplet_index, inplace=True)
         self.triplet_pd.reset_index(drop=True, inplace=True)
-        print(self.triplet_pd)
+
         # next query
         self.next_query(inc_idx=False)
 
