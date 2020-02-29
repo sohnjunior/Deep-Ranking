@@ -1,6 +1,7 @@
 import tkinter as tk
 import pandas as pd
 from PIL import Image, ImageTk
+from ttkthemes import ThemedStyle
 import pickle
 import os
 
@@ -26,6 +27,9 @@ class TripletChecker():
         self.window.title('TRIPLET CHECKER')
         self.window.geometry('900x600+200+200')
         self.window.resizable(False, False)
+        # theme setting
+        style = ThemedStyle(self.window)
+        style.set_theme('breeze')
 
     def set_image_frame(self):
         """ window configuration - image frames """
@@ -52,20 +56,25 @@ class TripletChecker():
 
     def set_buttons(self):
         """ window configuration - buttons """
-        # next 버튼 초록색 흰글씨
-        next_button = tk.Button(self.window, text='next', command=self.next_query,
+        # next 버튼
+        next_button = tk.Button(self.window, text='-->', command=self.next_query,
                                 width=10, height=2, font=('맑은고딕', 20, 'bold'))
-        next_button.place(x=500, y=80)
+        next_button.place(x=670, y=60)
 
-        # delete 버튼 빨간색 흰글씨
-        delete_button = tk.Button(self.window, text='delete', command=self.delete_query,
-                                  width=10, height=2, font=('맑은고딕', 20, 'bold'))
-        delete_button.place(x=680, y=80)
+        # prev 버튼
+        prev_button = tk.Button(self.window, text='<--', command=self.prev_query,
+                                width=10, height=2, font=('맑은고딕', 20, 'bold'))
+        prev_button.place(x=500, y=60)
+
+        # delete 버튼
+        delete_button = tk.Button(self.window, text='Delete', command=self.delete_query,
+                                  width=10, height=2, font=('맑은고딕', 20, 'bold'), fg='#fc0352')
+        delete_button.place(x=590, y=140)
 
         # save & exit 버튼
-        save_button = tk.Button(self.window, text='save & exit', command=self.save_and_quit,
+        save_button = tk.Button(self.window, text='Save & Exit', command=self.save_and_quit,
                                 width=10, height=2, font=('맑은고딕', 20, 'bold'))
-        save_button.place(x=580, y=220)
+        save_button.place(x=590, y=240)
 
     def draw_image(self, path='sample.jpeg', type='query'):
         """ draw the image(query, pos, neg) """
@@ -94,6 +103,11 @@ class TripletChecker():
         self.draw_image(path=query_path, type='query')
         self.draw_image(path=positive_path, type='positive')
         self.draw_image(path=negative_path, type='negative')
+
+    def prev_query(self):
+        """ load prev query image """
+        self.triplet_index -= 1
+        self.next_query(inc_idx=False)
 
     def delete_query(self):
         """ delete current query image and load next image """
