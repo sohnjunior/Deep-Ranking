@@ -1,13 +1,13 @@
 Image Similarity with Deep Ranking Algorithm 
 ============================================ 
 
+<br>
 
 Installation
 --------------- 
 ### Required package for Triplet Checker
 <pre>
 <code>
-pip install tkinter
 pip install pillow
 pip install pandas
 pip install ttkthemes
@@ -31,4 +31,4 @@ python predict.py
 ```
 python triplet_checker.py
 ```
-> triplet_checker.py 는 triplet.csv 파일과 같은 디렉토리에 위치시켜야 합니다.
+> triplet_checker.py 는 triplet.csv 와 같은 디렉토리에 위치시켜야 합니다.
