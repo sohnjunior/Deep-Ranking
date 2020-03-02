@@ -21,9 +21,14 @@ class TripletChecker():
                 self.triplet_index = pickle.load(f)
         else:
             self.triplet_index = 0
+        # numbering label
+        self.label = tk.Label(self.window, text='index : ' + str(self.triplet_index))
+        self.label.place(x=50, y=50)
 
     def set_window_frame(self):
-        """ window configuration - title & size """
+        """
+        window configuration - title & size
+        """
         self.window.title('TRIPLET CHECKER')
         self.window.geometry('900x600+200+200')
         self.window.resizable(False, False)
@@ -32,7 +37,9 @@ class TripletChecker():
         style.set_theme('breeze')
 
     def set_image_frame(self):
-        """ window configuration - image frames """
+        """
+        window configuration - image frames
+        """
         # query
         query_frame = tk.LabelFrame(self.window, text='QUERY',
                                     width=230, height=230, font=('맑은고딕', 20, 'bold'))
@@ -55,29 +62,33 @@ class TripletChecker():
         self.negative_panel.pack()
 
     def set_buttons(self):
-        """ window configuration - buttons """
+        """
+        window configuration - buttons
+        """
         # next 버튼
         next_button = tk.Button(self.window, text='-->', command=self.next_query,
-                                width=10, height=2, font=('맑은고딕', 20, 'bold'))
+                                width=10, height=2, font=('맑은고딕', 17, 'bold'))
         next_button.place(x=670, y=60)
 
         # prev 버튼
         prev_button = tk.Button(self.window, text='<--', command=self.prev_query,
-                                width=10, height=2, font=('맑은고딕', 20, 'bold'))
+                                width=10, height=2, font=('맑은고딕', 17, 'bold'))
         prev_button.place(x=500, y=60)
 
         # delete 버튼
         delete_button = tk.Button(self.window, text='Delete', command=self.delete_query,
-                                  width=10, height=2, font=('맑은고딕', 20, 'bold'), fg='#fc0352')
+                                  width=10, height=2, font=('맑은고딕', 17, 'bold'), fg='#fc0352')
         delete_button.place(x=590, y=140)
 
         # save & exit 버튼
         save_button = tk.Button(self.window, text='Save & Exit', command=self.save_and_quit,
-                                width=10, height=2, font=('맑은고딕', 20, 'bold'))
+                                width=10, height=2, font=('맑은고딕', 17, 'bold'))
         save_button.place(x=590, y=240)
 
     def draw_image(self, path='sample.jpeg', type='query'):
-        """ draw the image(query, pos, neg) """
+        """
+        draw the image(query, pos, neg)
+        """
         # select panel
         if type == 'query':
             target = self.query_panel
@@ -92,7 +103,9 @@ class TripletChecker():
         target.image = img
 
     def next_query(self, inc_idx=True):
-        """ load next query image """
+        """
+        load next query image
+        """
         # increase index
         if inc_idx:
             self.triplet_index += 1
@@ -104,13 +117,20 @@ class TripletChecker():
         self.draw_image(path=positive_path, type='positive')
         self.draw_image(path=negative_path, type='negative')
 
+        # set label
+        self.label.configure(text='index : ' + str(self.triplet_index))
+
     def prev_query(self):
-        """ load prev query image """
+        """
+        load prev query image
+        """
         self.triplet_index -= 1
         self.next_query(inc_idx=False)
 
     def delete_query(self):
-        """ delete current query image and load next image """
+        """
+        delete current query image and load next image
+        """
         # delete current dataframe info
         self.triplet_pd.drop(self.triplet_index, inplace=True)
         self.triplet_pd.reset_index(drop=True, inplace=True)
@@ -119,7 +139,9 @@ class TripletChecker():
         self.next_query(inc_idx=False)
 
     def save_and_quit(self):
-        """ save data and quit window """
+        """
+        save data and quit window
+        """
         # save check-point
         with open('triplet_check_point.pickle', 'wb') as f:
             pickle.dump(self.triplet_index, f)
@@ -131,7 +153,9 @@ class TripletChecker():
         self.window.destroy()
 
     def run(self):
-        """ main loop """
+        """
+        main loop
+        """
         # window setting
         self.set_window_frame()
         self.set_buttons()
