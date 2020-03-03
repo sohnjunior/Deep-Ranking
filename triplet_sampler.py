@@ -3,6 +3,7 @@ import os
 
 import numpy as np
 import pandas as pd
+from pathlib import Path
 
 # -- class(label) info
 class_file = open("patent_image/wnids.txt", "r")
@@ -15,12 +16,14 @@ TRIPLET_PATH = "triplet.csv"
 
 
 def list_pictures(directory):
-    return [os.path.join(root, f)
+    return [Path(root) / f
             for root, _, files in os.walk(directory) for f in files]
 
 
 def get_negative_images(all_images, image_names, num_neg_images):
-    """ Get out class images """
+    """
+    Get out class images
+    """
     random_numbers = np.arange(len(all_images))
     np.random.shuffle(random_numbers)
     if int(num_neg_images) > (len(all_images) - 1):
@@ -38,7 +41,9 @@ def get_negative_images(all_images, image_names, num_neg_images):
 
 
 def get_positive_images(image_name, image_names, num_pos_images):
-    """ Get in class images """
+    """
+    Get in class images
+    """
     random_numbers = np.arange(len(image_names))
     np.random.shuffle(random_numbers)
     if int(num_pos_images) > (len(image_names) - 1):
@@ -56,7 +61,8 @@ def get_positive_images(image_name, image_names, num_pos_images):
 
 
 def generate_triplets(dataset_path, num_neg_images, num_pos_images):
-    """ Generate pre-sampled triplet dataset
+    """
+    Generate pre-sampled triplet dataset
 
     Parameters
     ----------
