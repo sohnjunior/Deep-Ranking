@@ -22,8 +22,14 @@ class TripletChecker():
         else:
             self.triplet_index = 0
         # numbering label
-        self.label = tk.Label(self.window, text='index : ' + str(self.triplet_index))
-        self.label.place(x=50, y=50)
+        self.label = tk.Label(self.window, text='check ' + str(self.triplet_index) + 'th',
+                              font=('맑은고딕', 17, 'bold'))
+        self.label.place(x=40, y=50)
+        # number entry
+        self.entry_label = tk.Label(self.window, text='move to...', font=('맑은고딕', 13))
+        self.entry_label.place(x=30, y=100)
+        self.entry = tk.Entry(self.window, width=5)
+        self.entry.place(x=30, y=120)
 
     def set_window_frame(self):
         """
@@ -69,23 +75,24 @@ class TripletChecker():
         next_button = tk.Button(self.window, text='-->', command=self.next_query,
                                 width=10, height=2, font=('맑은고딕', 17, 'bold'))
         next_button.place(x=670, y=60)
-
         # prev 버튼
         prev_button = tk.Button(self.window, text='<--', command=self.prev_query,
                                 width=10, height=2, font=('맑은고딕', 17, 'bold'))
         prev_button.place(x=500, y=60)
-
         # delete 버튼
         delete_button = tk.Button(self.window, text='Delete', command=self.delete_query,
                                   width=10, height=2, font=('맑은고딕', 17, 'bold'), fg='#fc0352')
         delete_button.place(x=590, y=140)
-
         # save & exit 버튼
         save_button = tk.Button(self.window, text='Save & Exit', command=self.save_and_quit,
                                 width=10, height=2, font=('맑은고딕', 17, 'bold'))
         save_button.place(x=590, y=240)
+        # index 수정 버튼
+        edit_button = tk.Button(self.window, text='move', command=self.edit_index,
+                                  width=5, height=1, font=('맑은고딕', 12))
+        edit_button.place(x=100, y=125)
 
-    def draw_image(self, path='sample.jpeg', type='query'):
+    def draw_image(self, path, type='query'):
         """
         draw the image(query, pos, neg)
         """
@@ -118,13 +125,14 @@ class TripletChecker():
         self.draw_image(path=negative_path, type='negative')
 
         # set label
-        self.label.configure(text='index : ' + str(self.triplet_index))
+        self.label.configure(text='check ' + str(self.triplet_index) + 'th')
 
     def prev_query(self):
         """
         load prev query image
         """
-        self.triplet_index -= 1
+        if self.triplet_index is not 0:
+            self.triplet_index -= 1
         self.next_query(inc_idx=False)
 
     def delete_query(self):
@@ -151,6 +159,18 @@ class TripletChecker():
 
         # destroy the window
         self.window.destroy()
+
+    def edit_index(self):
+        if self.entry.get() is '':
+            return
+
+        self.triplet_index = int(self.entry.get())
+        self.next_query(inc_idx=False)
+        self.clear_text()
+
+    def clear_text(self):
+        self.window.focus_set()
+        self.entry.delete(0, 'end')
 
     def run(self):
         """
