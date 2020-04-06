@@ -11,8 +11,8 @@ classes = [x.strip() for x in class_file.readlines()]
 class_file.close()
 
 # -- path info
-TRAIN_PATH = "patent_image/train/"
-TRIPLET_PATH = "triplet.csv"
+TRAIN_PATH = "patent_image/design/"
+TRIPLET_PATH = "design_triplet.csv"
 
 
 def list_pictures(directory):

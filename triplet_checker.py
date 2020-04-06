@@ -7,7 +7,7 @@ import os
 
 
 class TripletChecker():
-    def __init__(self):
+    def __init__(self, path):
         # create window object
         self.window = tk.Tk()
         # image panel
@@ -15,7 +15,8 @@ class TripletChecker():
         self.positive_panel = None
         self.negative_panel = None
         # triplet parameters
-        self.triplet_pd = pd.read_csv('triplet.csv')
+        self.path = path
+        self.triplet_pd = pd.read_csv(self.path)
         if os.path.exists('triplet_check_point.pickle'):
             with open('triplet_check_point.pickle', 'rb') as f:
                 self.triplet_index = pickle.load(f)
@@ -155,7 +156,7 @@ class TripletChecker():
             pickle.dump(self.triplet_index, f)
 
         # save to csv
-        self.triplet_pd.to_csv('triplet.csv', index=False, mode='w')
+        self.triplet_pd.to_csv(self.path, index=False, mode='w')
 
         # destroy the window
         self.window.destroy()
@@ -189,5 +190,5 @@ class TripletChecker():
 
 
 if __name__ == '__main__':
-    program = TripletChecker()
+    program = TripletChecker('design_triplet.csv')
     program.run()

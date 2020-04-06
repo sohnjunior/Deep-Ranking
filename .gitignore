@@ -4,7 +4,7 @@
 tiny-imagenet-200/
 patent_image/
 __pycache__/
-triplet.csv 
+design_triplet.csv
 embedding.txt                                                                                                                              
 deeprank.pt
 Icon?

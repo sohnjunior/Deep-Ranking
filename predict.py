@@ -109,7 +109,7 @@ class Prediction:
 
         # top 5 images
         predicted_images = [(img[0], self.train_df.loc[img[1], "query"]) for img in image_dist_sorted[:result_num]]
-
+        print(predicted_images)
         # make png file
         self.save_result([(0.0, query_image_path)] + predicted_images, result_num, result_name=save_as)
 
@@ -117,11 +117,11 @@ class Prediction:
 def main():
     predictor = Prediction()
     image_path1 = 'patent_image/train/닭/4020020037823.jpg'
-    image_path2 = 'patent_image/train/의자/3020100003952M011.1.jpg'
+    image_path2 = 'patent_image/train/의자/3020020001785M010.jpg'
     image_path3 = 'patent_image/train/태양/4019880001850.jpg'
 
     # get images for 3 Validation set
-    test_images = [image_path1, image_path2, image_path3]
+    test_images = [image_path2]
     for idx, p in enumerate(test_images):
         predictor.predict(p, 5, f'result_{idx}.png')
 
